@@ -63,7 +63,9 @@
               // Use setTimeout to delay the redirection
               setTimeout(() => {
                 // Redirect after the delay
-                window.location.href = "https://milankacar.github.io/points-check/?id=" + idValue;
+                const redUrl = "https://milankacar.github.io/points-check/?id=" + idValue;
+                console.log(redUrl)
+                window.location.href = redUrl;
               }, delayTime);
             }
             // Initial load of points using the extracted id
