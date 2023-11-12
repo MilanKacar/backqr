@@ -59,15 +59,7 @@
             console.log(redUrl)
             // Check if apiKey is null or an empty string
             if (apiKey === null || apiKey.trim() === "") {
-              // Set the delay time in milliseconds (2 seconds = 2000 milliseconds)
-              const delayTime = 10000;
-            
-              // Use setTimeout to delay the redirection
-              setTimeout(() => {
-                // Redirect after the delay
-                
                 window.location.href = redUrl;
-              }, delayTime);
             }
             // Initial load of points using the extracted id
             if (idValue) {
