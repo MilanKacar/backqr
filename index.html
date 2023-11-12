@@ -53,6 +53,7 @@
                 var subtractValue = subtractPointsInput.value;
                 var pointsAsString = getPoints(idValue);
                 var newPoints = parseInt(pointsAsString, 10) - subtractValue;
+                console.log(newPoints);
 
                 fetch("http://127.0.0.1:5000/update-points", {
                     method: "POST",
