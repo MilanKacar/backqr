@@ -1,113 +1,21 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Get and Subtract Points</title>
-    <style>
-
-        .
-        .button {
-            position: relative;
-            background-color: black;
-            border-radius: 4em;
-            font-size: 16px;
-            color: white;
-            padding: 0.8em 1.8em;
-            cursor: pointer;
-            user-select: none;
-            text-align: absolute;
-            text-decoration: none;
-            cursor: pointer;
-            transition-duration: 0.4s;
-            -webkit-transition-duration: 0.4s; /* Safari */
-        }
-
-        .subtract-form {
-            border-radius: 10px; /* Adjust as needed for desired border radius */
-            font-size: 16px; /* Text size inside the form */
-            padding: 20px; /* Optional: Adds padding inside the form */
-            background-color: #f2f2f2; /* Optional: Background color of the form */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow effect */
-            width: fit-content; /* Adjusts the width to fit the content */
-            margin: auto; /* Centers the form if the parent container allows */
-        }
-
-        .button:hover {
-            transition-duration: 0.1s;
-            background-color: #4373b9;
-        }
-
-        .button:after {
-            content: "";
-            display: block;
-            position: absolute;
-            border-radius: 4em;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: all 0.5s;
-            box-shadow: 0 0 10px 40px white;
-        }
-
-        .button:active:after {
-            box-shadow: 0 0 0 0 white;
-            position: absolute;
-            border-radius: 4em;
-            left: 0;
-            top: 0;
-            opacity: 1;
-            transition: 0s;
-        }
-
-        .button:active {
-            top: 1px;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
-
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-          /* demo */
-          body {
-            margin: 0;
-            display: grid;
-            place-items: center;
-            font-family: 'Roboto', sans-serif;
-            height: 100vh;
-            background: linear-gradient(to right, #83a4d4, #b6fbff);
-          }
-
-
-        h1 {
-            font-size: calc(1.5em + 3vw);
-            margin: -2em 0 2em;
-            text-align: center;
-            line-height: 1.3em;
-        }
-    </style>
 </head>
 <body>
+    <h1>Get and Subtract Points</h1>
 
+    <div>
+        <h2>Points Information</h2>
+        <p id="points-info"></p>
+    </div>
 
-  <header>
-    <!-- Logo in the header, which links to the specified URL -->
-    <a href="https://tforce.ch/" target="_blank" id="logo">
-      <img src="logo.png" alt="Task Force Event Logistique Logo">
-    </a>
-  </header>
-  <div>
-        <form id="subtract-form">
-            <input type="number" id="subtract-points" name="subtract-points" min="1" value="10">
-        </form>
-  <div>
-  <div>
-      <a class="button" id="subtract-button">Subtract</a>
-  </div>
-
-
+    <form id="subtract-form">
+        <label for="subtract-points">Points to Subtract:</label>
+        <input type="number" id="subtract-points" name="subtract-points" min="1" value="10">
+        <button type="button" id="subtract-button">Subtract</button>
+    </form>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
