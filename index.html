@@ -24,6 +24,8 @@
             const subtractPointsInput = document.getElementById("subtract-points");
             const subtractButton = document.getElementById("subtract-button");
 
+            var currentPoints = 0; // Initialize currentPoints
+
             // Function to get and display points
             function getPoints(id) {
                 return new Promise((resolve, reject) => {
@@ -34,15 +36,16 @@
                         },
                         body: JSON.stringify({ id: id })
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            const points = parseInt(data.points, 10);
-                            pointsInfo.textContent = `Points: ${points}`;
-                            resolve(points); // Resolve the Promise with the integer points value
-                        })
-                        .catch(error => {
-                            reject(error); // Reject the Promise if there's an error
-                        });
+                    .then(response => response.json())
+                    .then(data => {
+                        const points = parseInt(data.points, 10);
+                        pointsInfo.textContent = `Points: ${points}`;
+                        currentPoints = points; // Update currentPoints here
+                        resolve(points); // Resolve the Promise with the integer points value
+                    })
+                    .catch(error => {
+                        reject(error); // Reject the Promise if there's an error
+                    });
                 });
             }
 
@@ -52,39 +55,33 @@
 
             // Initial load of points using the extracted id
             if (idValue) {
-                getPoints(idValue).then(points => {
-                    // Set the initial 'currentPoints' value
-                    var currentPoints = points;
-
-                    // Handle subtract button click
-                    subtractButton.addEventListener("click", function () {
-                        var subtractValue = subtractPointsInput.value;
-                        currentPoints = parseInt(currentPoints, 10); // Ensure 'currentPoints' is an integer
-                        var newPoints = currentPoints - subtractValue;
-
-                        fetch("http://127.0.0.1:5000/update-points", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({ id: idValue, new_points: newPoints })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    // Successfully subtracted points, get and display updated points
-                                    getPoints(idValue).then(updatedPoints => {
-                                        // Update 'currentPoints' with the new value
-                                        currentPoints = updatedPoints;
-                                    });
-                                } else {
-                                    // Handle errors or display a message if subtraction fails
-                                    console.error("Error subtracting points:", data.message);
-                                }
-                            });
-                    });
-                });
+                getPoints(idValue);
             }
+
+            // Handle subtract button click
+            subtractButton.addEventListener("click", function () {
+                var subtractValue = subtractPointsInput.value;
+                currentPoints = parseInt(currentPoints, 10); // Ensure 'currentPoints' is an integer
+                var newPoints = currentPoints - subtractValue;
+
+                fetch("http://127.0.0.1:5000/update-points", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id: idValue, new_points: newPoints })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Successfully subtracted points, get and display updated points
+                        getPoints(idValue);
+                    } else {
+                        // Handle errors or display a message if subtraction fails
+                        console.error("Error subtracting points:", data.message);
+                    }
+                });
+            });
         });
     </script>
 </body>
