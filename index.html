@@ -56,7 +56,7 @@
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ id: id , subtract: getPoints(idValue) - getsubtractValue })
+                    body: JSON.stringify({ id: id , new_points: getPoints(idValue) - getsubtractValue })
                 })
                     .then(response => response.json())
                     .then(data => {
