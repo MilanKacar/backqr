@@ -26,17 +26,24 @@
 
             // Function to get and display points
             function getPoints(id) {
-                fetch("http://127.0.0.1:5000/getgoogle", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ id: id })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        pointsInfo.textContent = `Points: ${data.points}`;
-                    });
+                return new Promise((resolve, reject) => {
+                    fetch("http://127.0.0.1:5000/getgoogle", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const points = parseInt(data.points, 10);
+                            pointsInfo.textContent = `Points: ${points}`;
+                            resolve(points); // Resolve the Promise with the integer points value
+                        })
+                        .catch(error => {
+                            reject(error); // Reject the Promise if there's an error
+                        });
+                });
             }
 
             // Parse the URL to extract the id parameter
