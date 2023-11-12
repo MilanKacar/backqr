@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect Page</title>
+</head>
+<body>
+    <div id="message">Hello</div>
+
+    <script>
+        // Display "hello" message
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = "Hello";
+
+        // Redirect to the specified webpage after 2 seconds
+        setTimeout(function() {
+            window.location.href = 'https://milankacar.github.io/qr';
+        }, 2000); // 2000 milliseconds = 2 seconds
+    </script>
+</body>
+</html>
