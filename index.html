@@ -1,35 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Get Points</title>
+    <title>Get and Subtract Points</title>
 </head>
 <body>
-    <h1>Get Points</h1>
+    <h1>Get and Subtract Points</h1>
 
     <div>
         <h2>Points Information</h2>
         <p id="points-info"></p>
     </div>
 
+    <form id="subtract-form">
+        <label for="subtract-points">Points to Subtract:</label>
+        <input type="number" id="subtract-points" name="subtract-points" min="1" value="1">
+        <button type="button" id="subtract-button">Subtract</button>
+    </form>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Get the id value from the URL query string
-            const urlParams = new URLSearchParams(window.location.search);
-            const idValue = urlParams.get('id');
+            const pointsInfo = document.getElementById("points-info");
+            const subtractForm = document.getElementById("subtract-form");
+            const subtractPointsInput = document.getElementById("subtract-points");
+            const subtractButton = document.getElementById("subtract-button");
 
-            // Send a POST request to the server
-            fetch("http://127.0.0.1:5000/getgoogle", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ id: idValue })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const pointsInfo = document.getElementById("points-info");
-                    pointsInfo.textContent = `Points: ${data.points}`;
-                });
+            // Function to get and display points
+            function getPoints(id) {
+                fetch("http://127.0.0.1:5000/getgoogle", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        pointsInfo.textContent = `Points: ${data.points}`;
+                    });
+            }
+
+            // Parse the URL to extract the id parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const idValue = urlParams.get("id");
+
+            // Initial load of points using the extracted id
+            if (idValue) {
+                getPoints(idValue);
+            }
+
+            // Handle subtract button click
+            subtractButton.addEventListener("click", function () {
+                const subtractValue = subtractPointsInput.value;
+                fetch("http://127.0.0.1:5000/subtract-points", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id: id , subtract: getPoints(idValue) - getsubtractValue })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Successfully subtracted points, get and display updated points
+                            getPoints(idValue); // Use the extracted id here
+                        } else {
+                            // Handle errors or display a message if subtraction fails
+                            console.error("Error subtracting points:", data.message);
+                        }
+                    });
+            });
         });
     </script>
 </body>
