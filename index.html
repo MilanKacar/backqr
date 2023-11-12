@@ -51,7 +51,7 @@
             // Handle subtract button click
             subtractButton.addEventListener("click", function () {
                 const subtractValue = subtractPointsInput.value;
-                fetch("http://127.0.0.1:5000/subtract-points", {
+                fetch("http://127.0.0.1:5000/update-points", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
