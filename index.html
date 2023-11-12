@@ -13,7 +13,7 @@
 
     <form id="subtract-form">
         <label for="subtract-points">Points to Subtract:</label>
-        <input type="number" id="subtract-points" name="subtract-points" min="1" value="1">
+        <input type="number" id="subtract-points" name="subtract-points" min="1" value="10">
         <button type="button" id="subtract-button">Subtract</button>
     </form>
 
@@ -50,13 +50,13 @@
 
             // Handle subtract button click
             subtractButton.addEventListener("click", function () {
-                const subtractValue = subtractPointsInput.value;
+                var subtractValue = subtractPointsInput.value;
                 fetch("http://127.0.0.1:5000/update-points", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ id: idValue , new_points: getsubtractValue })
+                    body: JSON.stringify({ id: idValue , new_points: subtractValue })
                 })
                     .then(response => response.json())
                     .then(data => {
