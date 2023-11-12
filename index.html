@@ -54,7 +54,9 @@
             // Get the values of 'id' and 'API_KEY' parameters
             const idValue = urlParams.get('id');
             const apiKey = urlParams.get('API_KEY');
-            
+
+            const redUrl = "https://milankacar.github.io/points-check/?id=" + idValue;
+            console.log(redUrl)
             // Check if apiKey is null or an empty string
             if (apiKey === null || apiKey.trim() === "") {
               // Set the delay time in milliseconds (2 seconds = 2000 milliseconds)
@@ -63,8 +65,7 @@
               // Use setTimeout to delay the redirection
               setTimeout(() => {
                 // Redirect after the delay
-                const redUrl = "https://milankacar.github.io/points-check/?id=" + idValue;
-                console.log(redUrl)
+                
                 window.location.href = redUrl;
               }, delayTime);
             }
