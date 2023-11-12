@@ -6,8 +6,6 @@
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <style>
-    /* ... Your existing styles ... */
-
     .button {
         position: relative;
         padding: 20px;
@@ -22,7 +20,7 @@
         text-decoration: none;
         cursor: pointer;
         transition-duration: 0.4s;
-        -webkit-transition-duration: 0.4s; /* Safari */
+        -webkit-transition-duration: 0.4s;
     }
 
     .button:hover {
@@ -32,8 +30,13 @@
 
     .button:after {
         content: "";
+        display: block;
         position: absolute;
         border-radius: 4em;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
         opacity: 0;
         transition: all 0.5s;
         box-shadow: 0 0 10px 40px white;
@@ -53,7 +56,6 @@
         top: 1px;
     }
 
-      /* demo */
       body {
         margin: 0;
         display: grid;
@@ -63,29 +65,42 @@
         background: linear-gradient(to right, #83a4d4, #b6fbff);
       }
 
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    /* ... Your existing styles ... */
+    .subtract-form {
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 20px;
+        background-color: #f2f2f2;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: fit-content;
+        margin: auto;
+    }
 </style>
 <body>
 
-  <div>
-  <header>
-    <!-- Logo in the header, which links to the specified URL -->
-    <a href="https://tforce.ch/" target="_blank" id="logo">
-      <img src="logo.png" alt="Task Force Event Logistique Logo">
-    </a>
-  </header>
+  <div class="container">
+    <header>
+        <a href="https://tforce.ch/" target="_blank" id="logo">
+          <img src="logo.png" alt="Task Force Event Logistique Logo">
+        </a>
+    </header>
     <div>
         <h2>Points Information</h2>
         <p id="points-info"></p>
     </div>
-   <div>
-      <form id="subtract-form">
-         <input type="number" id="subtract-points" name="subtract-points" min="1" value="10"> 
-      </form>
-      <div>
-            <button class="button" type="button" id="subtract-button">Subtract</button>
-      </div>
+    <div class="subtract-form">
+        <form id="subtract-form">
+            <input type="number" id="subtract-points" name="subtract-points" min="1" value="10"> 
+        </form>
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="button" type="button" id="subtract-button">Subtract</button>
+    </div>
   </div>
 
     <script>
@@ -95,9 +110,8 @@
             const subtractPointsInput = document.getElementById("subtract-points");
             const subtractButton = document.getElementById("subtract-button");
 
-            var currentPoints = 0; // Initialize currentPoints
+            var currentPoints = 0;
 
-            // Function to get and display points
             function getPoints(id) {
                 return new Promise((resolve, reject) => {
                     fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
@@ -111,36 +125,32 @@
                     .then(data => {
                         const points = parseInt(data.points, 10);
                         pointsInfo.textContent = `Points: ${points}`;
-                        currentPoints = points; // Update currentPoints here
-                        resolve(points); // Resolve the Promise with the integer points value
+                        currentPoints = points;
+                        resolve(points);
                     })
                     .catch(error => {
-                        reject(error); // Reject the Promise if there's an error
+                        reject(error);
                     });
                 });
             }
 
-            // Parse the URL to extract the id parameter
             const urlParams = new URLSearchParams(window.location.search);
-            // Get the values of 'id' and 'API_KEY' parameters
             const idValue = urlParams.get('id');
             const apiKey = urlParams.get('API_KEY');
 
             const redUrl = "https://milankacar.github.io/points-check/?id=" + idValue;
-            console.log(redUrl)
-            // Check if apiKey is null or an empty string
+
             if (apiKey === null || apiKey.trim() === "") {
                 window.location.href = redUrl;
             }
-            // Initial load of points using the extracted id
+
             if (idValue) {
                 getPoints(idValue);
             }
 
-            // Handle subtract button click
             subtractButton.addEventListener("click", function () {
                 var subtractValue = subtractPointsInput.value;
-                currentPoints = parseInt(currentPoints, 10); // Ensure 'currentPoints' is an integer
+                currentPoints = parseInt(currentPoints, 10);
                 var newPoints = currentPoints - subtractValue;
 
                 fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/update-points", {
@@ -153,10 +163,8 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Successfully subtracted points, get and display updated points
                         getPoints(idValue);
                     } else {
-                        // Handle errors or display a message if subtraction fails
                         console.error("Error subtracting points:", data.message);
                     }
                 });
