@@ -23,7 +23,7 @@
             const subtractForm = document.getElementById("subtract-form");
             const subtractPointsInput = document.getElementById("subtract-points");
             const subtractButton = document.getElementById("subtract-button");
-            let currentPoints = 0;
+            var currentPoints = 1;
 
             // Function to get and display points
             function getPoints(id) {
@@ -61,10 +61,9 @@
                 var subtractValue = subtractPointsInput.value;
                   // Usage example:
                 getPoints(idValue)
-                    .then(points => {
+                    .then(currentPoints => {
                         // 'points' now contains the integer points value
-                        console.log("Points as integer:", points);
-                        currentPoints = points; // Convert to string and assign to pointsAsString
+                        console.log("Points as integer:", currentPoints);
                     })
                     .catch(error => {
                         // Handle errors if there's an issue with the request
