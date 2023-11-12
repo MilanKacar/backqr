@@ -51,12 +51,15 @@
             // Handle subtract button click
             subtractButton.addEventListener("click", function () {
                 var subtractValue = subtractPointsInput.value;
+                var pointsAsString = getPoints(idValue);
+                var newPoints = parseInt(pointsAsString, 10) - subtractValue;
+
                 fetch("http://127.0.0.1:5000/update-points", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ id: idValue, new_points: parseInt(getPoints(idValue), 10) - subtractValue })
+                    body: JSON.stringify({ id: idValue, new_points: newPoints })
                 })
                     .then(response => response.json())
                     .then(data => {
