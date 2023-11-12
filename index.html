@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirect Page</title>
+    <title>Get Points</title>
 </head>
 <body>
-    <div id="message">Hello</div>
+    <h1>Get Points</h1>
+
+    <div>
+        <h2>Points Information</h2>
+        <p id="points-info"></p>
+    </div>
 
     <script>
-        // Display "hello" message
-        const messageDiv = document.getElementById('message');
-        messageDiv.textContent = "Hello";
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the id value from the URL query string
+            const urlParams = new URLSearchParams(window.location.search);
+            const idValue = urlParams.get('id');
 
-        // Redirect to the specified webpage after 2 seconds
-        setTimeout(function() {
-            window.location.href = 'https://milankacar.github.io/qr';
-        }, 2000); // 2000 milliseconds = 2 seconds
+            // Send a POST request to the server
+            fetch("http://127.0.0.1:5000/getgoogle", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: idValue })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const pointsInfo = document.getElementById("points-info");
+                    pointsInfo.textContent = `Points: ${data.points}`;
+                });
+        });
     </script>
 </body>
 </html>
