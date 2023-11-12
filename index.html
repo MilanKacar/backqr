@@ -59,20 +59,10 @@
             // Handle subtract button click
             subtractButton.addEventListener("click", function () {
                 var subtractValue = subtractPointsInput.value;
-                  // Usage example:
-                getPoints(idValue)
-                    .then(currentPoints => {
-                        // 'points' now contains the integer points value
-                        console.log("Points as integer:", currentPoints);
-                    })
-                    .catch(error => {
-                        // Handle errors if there's an issue with the request
-                        console.error("Error:", error);
-                });
+
+                // Remove the 'var' keyword to update the outer 'currentPoints' variable
+                currentPoints = parseInt(currentPoints, 10);
                 var newPoints = currentPoints - subtractValue;
-                console.log(subtractValue);
-                console.log(currentPoints);
-                console.log(newPoints);
 
                 fetch("http://127.0.0.1:5000/update-points", {
                     method: "POST",
