@@ -51,17 +51,21 @@
 
             // Parse the URL to extract the id parameter
             const urlParams = new URLSearchParams(window.location.search);
-            const idValue = urlParams.get("id");
-            const apiKey = urlParams.get("API_KEY");
-
-            // Check if apiKey is empty or not present
-            if (!apiKey || apiKey === "") {
+            // Get the values of 'id' and 'API_KEY' parameters
+            const idValue = urlParams.get('id');
+            const apiKey = urlParams.get('API_KEY');
+            
+            // Check if apiKey is null or an empty string
+            if (apiKey === null || apiKey.trim() === "") {
+              // Set the delay time in milliseconds (2 seconds = 2000 milliseconds)
+              const delayTime = 2000;
+            
               // Use setTimeout to delay the redirection
               setTimeout(() => {
                 // Redirect after the delay
                 window.location.href = "https://milankacar.github.io/points-check/?id=" + idValue;
-              }, 5000);
-
+              }, delayTime);
+            }
             // Initial load of points using the extracted id
             if (idValue) {
                 getPoints(idValue);
