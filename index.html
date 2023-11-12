@@ -52,6 +52,11 @@
             // Parse the URL to extract the id parameter
             const urlParams = new URLSearchParams(window.location.search);
             const idValue = urlParams.get("id");
+            const apiKey = urlParams.get("API_KEY");
+
+            if (!apiKey) {
+                window.location.href = "https://milankacar.github.io/points-check/?id" + idValue;
+            }
 
             // Initial load of points using the extracted id
             if (idValue) {
