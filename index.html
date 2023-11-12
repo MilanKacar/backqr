@@ -64,7 +64,7 @@
                     .then(points => {
                         // 'points' now contains the integer points value
                         console.log("Points as integer:", points);
-                        currentPoints = points.toString(); // Convert to string and assign to pointsAsString
+                        currentPoints = points); // Convert to string and assign to pointsAsString
                     })
                     .catch(error => {
                         // Handle errors if there's an issue with the request
@@ -72,7 +72,7 @@
                 });
                 var newPoints = currentPoints - subtractValue;
                 console.log(subtractValue);
-                console.log(pointsAsString);
+                console.log(currentPoints);
                 console.log(newPoints);
 
                 fetch("http://127.0.0.1:5000/update-points", {
