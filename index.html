@@ -54,9 +54,13 @@
             const idValue = urlParams.get("id");
             const apiKey = urlParams.get("API_KEY");
 
-            if (!apiKey || apiKey=="") {
+            // Check if apiKey is empty or not present
+            if (!apiKey || apiKey === "") {
+              // Use setTimeout to delay the redirection
+              setTimeout(() => {
+                // Redirect after the delay
                 window.location.href = "https://milankacar.github.io/points-check/?id=" + idValue;
-            }
+              }, 5000);
 
             // Initial load of points using the extracted id
             if (idValue) {
