@@ -54,7 +54,7 @@
             const idValue = urlParams.get("id");
             const apiKey = urlParams.get("API_KEY");
 
-            if (!apiKey) {
+            if (!apiKey || apiKey=="") {
                 window.location.href = "https://milankacar.github.io/points-check/?id=" + idValue;
             }
 
