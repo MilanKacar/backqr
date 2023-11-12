@@ -58,7 +58,15 @@
             // Handle subtract button click
             subtractButton.addEventListener("click", function () {
                 var subtractValue = subtractPointsInput.value;
-                var pointsAsString = getPoints(idValue);
+                var pointsAsString = getPoints(idValue)
+                .then(points => {
+                    // 'points' now contains the integer points value
+                    pointsValue = points;
+                    console.log("Points as integer:", pointsValue);
+                })
+                .catch(error => {
+                    console.error("Error fetching points:", error);
+                });
                 var newPoints = parseInt(pointsAsString, 10) - subtractValue;
                 console.log(subtractValue);
                 console.log(pointsAsString);
